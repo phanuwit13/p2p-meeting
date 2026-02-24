@@ -32,7 +32,10 @@ export function usePeer() {
     peer.on('open', setMyId)
 
     navigator.mediaDevices
-      .getUserMedia({ video: true, audio: true })
+      .getUserMedia({
+        video: true,
+        audio: true,
+      })
       .then((stream) => {
         setLocalStream(stream)
         peer.on('call', (incomingCall) => {
@@ -40,7 +43,7 @@ export function usePeer() {
           attachCall(incomingCall)
         })
       })
-      .catch((err) => console.error('Cannot access camera/mic:', err))
+      .catch(() => alert('Cannot access camera/mic'))
 
     return () => {
       peer.destroy()
